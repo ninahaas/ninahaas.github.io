@@ -1,22 +1,22 @@
 import copy
 
-N = 19
-NN = N ** 2
 BLACK = 'B'
 WHITE = 'W'
 EMPTY = '_'
 
 class Board:
-    def __init__(self):
-        self.board = [EMPTY] * NN
+    def __init__(self, N):
+        self.N = N
+        self.NN = N ** 2
+        self.board = [EMPTY] * self.NN
         self.ko = None
 
     # flattens 2D position into 1 number
     def flatten(self, p):
-        return N * p[0] + p[1]
+        return self.N * p[0] + p[1]
 
     def unflatten(self, fp):
-        return divmod(fp, N)
+        return divmod(fp, self.N)
 
     def switch_color(self, color):
         if color == BLACK:
@@ -35,11 +35,11 @@ class Board:
 
             # only keep neighbors in bounds
             for p in neighbors:
-                if 0 <= p[0] < N and 0 <= p[1] < N:
+                if 0 <= p[0] < self.N and 0 <= p[1] < self.N:
                     neighbors_in_bounds.append(self.flatten(p))
             return neighbors_in_bounds
 
-        return [get_neighbors(fp) for fp in range(NN)]
+        return [get_neighbors(fp) for fp in range(self.NN)]
 
     def place_stone(self, fp, color):
         self.board[fp] = color
@@ -72,7 +72,6 @@ class Board:
 
     def check_if_captured(self, fp, all_neighbors):
         reached, chain = self.find_reached(fp, all_neighbors)
-        print(reached, chain)
         if not any(self.board[rp] == EMPTY for rp in reached):
             self.bulk_place_stones(chain, EMPTY)
             return chain
@@ -82,13 +81,13 @@ class Board:
 
 class Game:
     def __init__(self):
-        self.board = Board()
+        self.board = Board(19)
         self.all_neighbors = self.board.get_all_neighbors()
         self.ko = None
 
     def print_board(self):
-        for i in range(N):
-            print(self.board.board[0 + (i * N): (N - 1) + (i * N)])
+        for i in range(self.board.N):
+            print(self.board.board[0 + (i * self.board.N): (self.board.N - 1) + (i * self.board.N)])
         print('')
 
     def play_move(self, p, color):
