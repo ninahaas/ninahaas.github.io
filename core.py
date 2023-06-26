@@ -186,6 +186,8 @@ def test_place_stone():
     game.board.place_stone(fp, WHITE)
     assert game.board.board[fp] == WHITE
 
+def test_capture():
+
 # main
 game = Game()
 game.play_move([0, 2], WHITE)

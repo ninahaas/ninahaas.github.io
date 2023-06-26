@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Go Game</title>
+    <style>
+      .board_image {
+        position: absolute;
+        width: 36.1em;
+        height: 36.1em;
+        background-size: 2.0em 2.0em, 2.0em 2.0em, 12em 12em;
+        background-color: #d19b62;
+        background-image: linear-gradient(black 0.1em, transparent 0), linear-gradient(90deg, black 0.1em, transparent 0), radial-gradient(#000000 0.3em, rgba(0, 0, 0, 0) 0%);
+        border-style: solid;
+        border-width: 1.5em;
+        border-color: #d19b62;
+        top: 1.5em;
+        left: 1.5em
+      }
+
+      ,
+      #board {
+        margin: 30em auto;
+        border: 1px solid #333333;
+        width: 36.1em;
+        height: 36.1em;
+        position: relative;
+      }
+
+      .intersection {
+        position: absolute;
+        width: 2.0em;
+        height: 2.0em;
+        background-color: transparent;
+        border: 0.5px solid gray;
+        border-radius: 50%;
+        margin: 0 auto;
+      }
+
+      .black-stone {
+        background-color: #283242;
+        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, .3);
+      }
+
+      .white-stone {
+        background-color: #e8eaed;
+        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, .3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game">
+      <canvas></canvas>
+      <div class="board_image"></div>
+    </div>
+    <div id="board"></div>
+    <script>
+      var stoneColors = ["black-stone", "white-stone"];
+      var stoneCounter = 0;
+
+      function placeStone(position) {
+        var intersection = document.getElementById(position);
+        intersection.classList.add(stoneColors[stoneCounter % stoneColors.length]);
+        stoneCounter++;
+      }
+      var board = document.getElementById("board");
+      var alphabet = "ABCDEFGHIJKLMNOPQRS";
+      for (var row = 0 + 1; row < 19 + 1; row++) {
+        for (var col = 0 + 1; col < 19 + 1; col++) {
+          var intersection = document.createElement("div");
+          intersection.classList.add("intersection");
+          intersection.setAttribute("id", alphabet[col] + (row + 1));
+          intersection.setAttribute("onclick", "placeStone('" + alphabet[col] + (row + 1) + "')");
+          intersection.style.top = row * 2.0 + "em";
+          intersection.style.left = col * 2.0 + "em";
+          board.appendChild(intersection);
+        }
+      }
+    </script>
+  </body>
+</html>
