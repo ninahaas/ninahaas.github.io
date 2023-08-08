@@ -53,26 +53,6 @@
       <div class="board_image"></div>
     </div>
     <div id="board"></div>
-    <script type="module">
-      import { placeStone } from './main.js';
-
-      var stoneColors = ["black-stone", "white-stone"];
-      var stoneCounter = 0;
-      var indent = 2.0;
-      var board = document.getElementById("board");
-      var alphabet = "ABCDEFGHIJKLMNOPQRS";
-
-      for (var row = 0; row < 19; row++) {
-        for (var col = 0; col < 19; col++) {
-          var intersection = document.createElement("div");
-          intersection.classList.add("intersection");
-          intersection.setAttribute("id", alphabet[col] + (row + 1));
-          intersection.setAttribute("onclick", "placeStone('" + alphabet[col] + (row + 1) + "')");
-          intersection.style.top = row * 2.0 + indent + "em";
-          intersection.style.left = col * 2.0 + indent + "em";
-          board.appendChild(intersection);
-        }
-      }
-    </script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>
